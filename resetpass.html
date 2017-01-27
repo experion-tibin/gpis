@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>
+        admin
+    </title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    
+    <script src="logout.js" type="text/javascript"></script>
+    <script src="validate.js" type="text/javascript"></script>
+    
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+    
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+    <script src="bootbox.min.js" type="text/javascript"></script>
+    <script src="resetpass.js" type="text/javascript"></script>
+</head>
+
+
+<body >
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">GATEPASS ISSUE SYSTEM</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a id="display3" href="#">Reset password</a></li>
+
+
+            </ul>
+             <ul class="nav navbar-nav navbar-right">
+
+                <li><a onclick="logout();" href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+            
+        </div>
+    </nav>
+    <div class="container">
+        
+
+
+        <div id="reset pass" >
+
+            
+
+            <div class="box panel panel-default">
+
+                <div class="panel-heading">
+                    <h4>Reset Password</h4>
+                </div>
+                <div class="panel-body">
+
+
+                    <form class="form-horizontal " id="userform" name="userform">
+
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="password1">Old Password</label>
+                                <br>
+                                <input type="password" required class="form-control" id="password1" placeholder="Password" name="password">
+                            </div>
+                            <div class="col-sm-12"></div>
+                            <div class="col-sm-6">
+                                <label for="password">New Password</label>
+                                <br>
+                                <input type="password" required class="form-control" id="password2" placeholder="Password" name="password">
+                            </div>
+                            <div class="col-sm-12"></div>
+                            <div class="col-sm-6">
+                                <label for="password">Confirm Password</label>
+                                <br>
+                                <input type="password" required class="form-control" id="password3" placeholder="Password" name="password">
+                            </div>
+                        </div>
+                
+
+
+                        
+
+
+                        <button type="button" class="btn btn-primary btn-md" onclick="save();">Save</button>
+
+
+                    </form>
+                    
+
+                </div>
+                <div class="panel-footer" id="result"></div>
+            </div>
+
+        </div>
+        
+    </div>
+    
+</body>
+
+</html>

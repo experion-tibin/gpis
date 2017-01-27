@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Sample Page</title>
+</head>
+<body>
+<center>
+<input type="email" id="eid" placeholder="enter eid">
+<input type="password" id="password" placeholder="enter password">
+ <button type="button" onclick="abcd();">Click me</button> </p>
+ <div id="result"></div>
+</center>
+<script>
+window.location="l.html";
+function abcd(){
+var httpObj=new	XMLHttpRequest();
+httpObj.onreadystatechange=function()
+{
+	console.log(this.readyState);
+	document.getElementById("result").innerHTML=this.status;
+	if(this.readyState=='4' && this.status=='200')
+	{
+		var result=this.responseText;
+		result=JSON.parse(result);
+				if(result.status==200)
+			
+			{
+				
+				console.log("result.message");
+				document.getElementById("result").innerHTML=result.message;
+
+				window.location="user.html";
+			}
+			else{
+				console.log(result.message);
+				document.getElementById("result").innerHTML=result.message;
+			}
+	}
+}
+httpObj.open('GET','http://127.0.0.1:8088/user/hi?eid=517&password=tibin/hai',true);
+httpObj.setRequestHeader('content-type','application/x-www-form-urlencoded');
+httpObj.send('eid='+document.getElementById('eid').value+'&password='+document.getElementById('password').value);
+}
+
+
+</script>
+	
+</body>
+</html>

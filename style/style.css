@@ -1,0 +1,66 @@
+
+
+div.container{
+width: 90%;
+
+
+margin:35px auto;
+font-family: 'Raleway', sans-serif;
+}
+
+
+
+.demo-layout-transparent{
+	background-color: #61f2f5;
+
+}
+body{
+
+	background-color: #F3F3F3;
+
+	
+	width: 100%;
+	
+}
+#adduser{
+	/*background: linear-gradient(#F1F2B5,#135058);*/
+}
+.panel {
+  border-color: #ddd;
+  /*background: linear-gradient(#767777,#F3F3F3);*/
+  background-color: #Fff;
+  opacity: 0.9;
+}
+input:focus{
+	background-color: #F3F3F3;
+}
+.panel-container{
+	padding: 10px;
+}
+.containerl{
+
+	width: 80%;
+	padding:   20px;
+	/*border: 2px solid gray;
+	border-radius: 10px;*/
+	font-family: raleway;
+	
+	margin-top:50px;
+	margin: auto;
+}
+/*.containerl input{
+   
+	width: 60%;
+	
+	 margin: auto;
+	
+}*/
+td[contenteditable=true]{
+	color: blue;
+	font-weight: bold;
+	opacity: 0.6;
+}
+.mdl-textfield__input{
+	color: black;
+
+}
