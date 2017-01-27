@@ -2,8 +2,8 @@ function validateu() {
 
 
 
-    if (!(document.userform.date.value) || isNaN(Date.parse(document.userform.date.value))) {
-        bootbox.alert("Please provide date!");
+    if (!(document.userform.date.value) ) {
+        bootbox.alert("Please provide dates!");
         document.userform.date.focus();
         return false;
     }

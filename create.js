@@ -22,6 +22,7 @@ if (typeof userid == 'undefined' || userid == null || usertype == 1) {
 
 
 function save() {
+   // var  dateformated=moment(jsobject.date).format('DD-MM-YYYY');
     if (!validateu()) {
         document.getElementById('result').innerHTML = "unable to proceed";
         return false;
@@ -33,9 +34,11 @@ function save() {
         visitors: []
     };
     var table = document.getElementById("vtable");
+    
+    var datef = toDate("#date");
 
-
-    jsobject.date = document.getElementById('date').value;
+    console.log(datef);
+    jsobject.date = datef;
     jsobject.time = document.getElementById('time').value;
     console.log(jsobject.time);
     jsobject.purpose = document.getElementById('purpose').value;
@@ -116,9 +119,38 @@ function save() {
     httpObj1.send(JSON.stringify(jsobject));
     document.getElementById("userform").reset();
 }
+function toDate(selector) {
+    var from = $(selector).val().split("-");
+    var str=from[2]+"-"+ from[1] +"-"+ from[0];
+    return (str);
+}
+function toDate2(str) {
+   // var str = moment(str).add(1, 'day');
+    var from = str.split("-");
+    
+    var str=from[2]+"-"+ from[1] +"-"+ from[0];
+    return (str);
+}
+function toTime(str) {
+    var from = str.split(":");
+    var dt = moment(from[0]+":"+from[1], ["HH:mm"]).format("hh:mm a");
+    //var str=(Number(from[2])+1)+"-"+ from[1] +"-"+ from[0];
+    return (dt);
+}
 
 function add() {
 
+
+//  var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
+// $.fn.bootstrapDP = datepicker;     
+   var  dateformat=moment().format('DD-MM-YYYY');
+
+     $('#date').datepicker({
+    format: 'dd-mm-yyyy',
+    startDate: '-0d'
+});
+
+     document.getElementById('date').value=dateformat;
     var table = document.getElementById("vtable");
     var length = table.rows.length;
     var row = table.insertRow(length);
@@ -227,7 +259,11 @@ function view() {
                 console.log("result.message");
                 var test = result.data;
 
-                var pdetails = _.groupBy(test, 'gateid');
+                //var pdetails = _.groupBy(test, 'gateid');
+                var pdetails = _.groupBy(test, function(b){
+                    return b.gateid+b.date;
+                });
+                console.log(pdetails,"pppp");
                 addtable(pdetails);
                 document.getElementById("result").innerHTML = result.message;
 
@@ -276,9 +312,12 @@ function addtable(arr) {
 
 
         $.each(value, function(index1, element) {
-            var mydate = new Date(element.date);
+            console.log(element.date);
+            var mydate = new Date(element.date) ;
+            mydate.setDate(mydate.getDate() + 1);
             mydate = mydate.toISOString().split('T')[0];
-            element.date = mydate;
+            element.date = toDate2(mydate);
+            element.time=toTime(element.time);
 
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";

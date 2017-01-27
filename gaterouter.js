@@ -62,7 +62,7 @@ router.route('/')
         var mydate = new Date(date);
         console.log(typeof mydate);
         console.log(mydate);
-        mydate = mydate.toISOString().split('T')[0];
+       // mydate = mydate.toISOString().split('T')[0];
         console.log(mydate);
 
         var time = data.time;
@@ -83,6 +83,7 @@ router.route('/')
             }
             var regex = /^([0]\d|[1][0-2]):([0-5]\d)\s?(?:AM|PM)$/i;
             if (!regex.test(time)) {
+
                 errmessage += "Invalid time.";
                 console.log("errmessage time");
                 return false;
@@ -98,7 +99,7 @@ router.route('/')
        
             var querystring = 'INSERT INTO gatepass_details SET ?';
             var gatepass = {
-                date: mydate,
+                date: date,
                 time: time,
                 purpose: purpose,
                 uid: uid
@@ -197,7 +198,7 @@ router.route('/')
     })
     .get(function(req, res) {
         console.log("pppppppp");
-        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd  where g.gateid=gd.gdid and g.visitorid=v.vid ; select * from user_login u,company c where u.cid=c.cid ', function(err, rows) {
+        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd  where g.gateid=gd.gdid and g.visitorid=v.vid ORDER BY date ASC; select * from user_login u,company c where u.cid=c.cid ', function(err, rows) {
             console.log("rows");
             var data = JSON.stringify(rows[0]);
             console.log(rows);
@@ -234,7 +235,7 @@ router.route('/:userid')
             return false;
         }
         console.log(id);
-        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd where g.gateid=gd.gdid and g.visitorid=v.vid and gd.uid = ?', [id], function(err, rows) {
+        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd where g.gateid=gd.gdid and g.visitorid=v.vid and gd.uid = ? ORDER BY date ASC', [id], function(err, rows) {
             // var data=JSON.stringify(rows[0]);
             //    json=JSON.parse(data);
             if (!err) {

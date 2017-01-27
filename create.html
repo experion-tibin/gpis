@@ -18,6 +18,7 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     
      <script src="bootbox.min.js" type="text/javascript"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -32,8 +33,11 @@
     <script src="create.js" type="text/javascript"></script>
     <script src="logout.js" type="text/javascript"></script>
     <script src="bootbox.min.js" type="text/javascript"></script>
+    <script src="moment.min.js" type="text/javascript"></script>
     <script src="validate.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
 
     <link rel="stylesheet" type="text/css" href="style/style.css">
 
@@ -84,7 +88,7 @@
                                 <div class="col-sm-4">
                                     <label for="date">Date</label>
                                     <br>
-                                    <input type="date" required class="form-control" id="date" placeholder="date" name="date">
+                                    <input type="text" data-provide="datepicker"   required class="form-control" id="date" placeholder="date" name="date" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-12"></div>

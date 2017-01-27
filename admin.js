@@ -233,9 +233,11 @@ function viewAll() {
             console.log(result);
             var test = result.data;
 
-            var pdetails = _.groupBy(test, 'gateid');
-            var tes = pdetails[1];
-
+            //var pdetails = _.groupBy(test, 'gateid');
+            //var tes = pdetails[1];
+            var pdetails = _.groupBy(test, function(b){
+                    return b.gateid+b.date;
+                });
 
 
 
@@ -287,9 +289,15 @@ function addtable(arr) {
 
 
         $.each(value, function(index1, element) {
-            var mydate = new Date(element.date);
+            // var mydate = new Date(element.date);
+            // mydate = mydate.toISOString().split('T')[0];
+            // element.date = mydate;
+
+             var mydate = new Date(element.date) ;
+            mydate.setDate(mydate.getDate() + 1);
             mydate = mydate.toISOString().split('T')[0];
-            element.date = mydate;
+            element.date = toDate2(mydate);
+            element.time=toTime(element.time);
 
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";
@@ -439,4 +447,23 @@ function dbsaverow(arr, uid) {
     httpObj1.setRequestHeader('content-type', 'application/json');
     httpObj1.setRequestHeader("Authorization", JSON.stringify(auth));
     httpObj1.send();
+}
+
+function toDate(selector) {
+    var from = $(selector).val().split("-");
+    var str=from[2]+"-"+ from[1] +"-"+ from[0];
+    return (str);
+}
+function toDate2(str) {
+   // var str = moment(str).add(1, 'day');
+    var from = str.split("-");
+    
+    var str=from[2]+"-"+ from[1] +"-"+ from[0];
+    return (str);
+}
+function toTime(str) {
+    var from = str.split(":");
+    var dt = moment(from[0]+":"+from[1], ["HH:mm"]).format("hh:mm a");
+    //var str=(Number(from[2])+1)+"-"+ from[1] +"-"+ from[0];
+    return (dt);
 }
