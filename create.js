@@ -1,5 +1,6 @@
 //$.material.init();
 var visitorcount = 0;
+var eventsource=[];
 var httpObj1 = new XMLHttpRequest();
 
 userid = localStorage.getItem('userid');
@@ -228,14 +229,25 @@ function toggle_visibility(id) {
     var viewall = document.getElementById('viewall');
 
     var create = document.getElementById('createnew');
+    var calendar=document.getElementById('calendar');
     if (e == viewall) {
 
         e.style.display = 'block';
         create.style.display = 'none';
+        document.getElementById('calendar').style.display='none';
         view();
-    } else {
+    } else if(e == calendar){
         e.style.display = 'block';
         viewall.style.display = 'none';
+        create.style.display = 'none';
+        $('#calendarview').fullCalendar('render');
+
+
+    }
+    else {
+        e.style.display = 'block';
+        viewall.style.display = 'none';
+        document.getElementById('calendar').style.display='none';
 
     }
 }
@@ -265,6 +277,7 @@ function view() {
                 });
                 console.log(pdetails,"pppp");
                 addtable(pdetails);
+                //createcalendarevent(pdetails);
                 document.getElementById("result").innerHTML = result.message;
 
 
@@ -287,8 +300,9 @@ function view() {
 }
 
 function addtable(arr) {
-
-
+     
+    eventsource=[];
+    console.log(eventsource);
     console.log("eeeee");
     var table = document.getElementById("viewtable");
     var length = arr.length;
@@ -309,31 +323,118 @@ function addtable(arr) {
      content = "<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>No.</th><th>GatepassID</th><th>Date</th><th>Time</th><th>Purpose</th><th>Visitors</th></tr></thead><tbody>";
     var i = 1;
     $.each(arr, function(index, value) {
+        var eventobj={"allDay": "",
+        "title": "",
+        "id": "",
+        "end": "",
+        "start": "",
+        "visitor": [],
+        "company": ""
+        
 
 
+
+    };
+
+        console.log("each out",index);
         $.each(value, function(index1, element) {
+            console.log("each in",index1);
+            console.log(eventsource);
             console.log(element.date);
             var mydate = new Date(element.date) ;
             mydate.setDate(mydate.getDate() + 1);
             mydate = mydate.toISOString().split('T')[0];
+            var datetime=mydate+" "+element.time;
             element.date = toDate2(mydate);
             element.time=toTime(element.time);
-
+            console.log(datetime);
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";
                 content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
 
-            } else {
+                eventobj.title=element.purpose+" at "+element.cname;
+                eventobj.id=element.gdid;
+                eventobj.purpose=element.purpose;
+                eventobj.company=element.cname;
+                eventobj.end=datetime;
+                eventobj.start=datetime;
+                eventobj.visitor.push({name:element.name,email:element.email,mobile:element.mobile,idtype:element.idtype,identity:element.identity,vehicleid:element.vehicleid});
+
+            } 
+
+            else {
                 content += "<tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+                eventobj.visitor.push({name:element.name,email:element.email,mobile:element.mobile,idtype:element.idtype,identity:element.identity,vehicleid:element.vehicleid});
+
+
             }
+            console.log(eventobj);
+                
 
         });
+        //eventsource[i-1]=eventobj;
+        eventsource.push(eventobj);
+                console.log(eventsource);
         i++;
         content += "</tbody> </table></td></tr>";
+        
     });
     content += "</tbody> </table> </div>";
     document.getElementById('view').innerHTML = content;
+
      $('#table1').DataTable();
+//      $('#calendar').fullCalendar({
+//     events: eventsource      
+// });
+
+$('#calendarview').fullCalendar({
+    events: eventsource,
+    // header: { left: 'today',
+    //         center: 'prev title next',
+    //         right: 'basicDay month' }
+
+
+            header:
+                {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listDay'
+                }, 
+        defaultView: 'listDay',
+
+   
+     eventClick:  function(event, jsEvent, view) {
+
+            $('#modalTitle').html(
+                "Purpose:"+
+                event.purpose
+                +"  <br>   GatepassID:"+event.id+"  <br> Date:"+moment(event.start).format('MMM Do h:mm A')+"  <br> Company:"+event.company+""
+                );
+             //$('#modalTitle').html(event.title);
+            $('#modalBody').html(visitordetails(event.visitor));
+            //#myModal4.modal-dialog  {width:75%;};
+            $('#fullCalModal').modal();
+        }
+//         eventRender: function(event, element)
+// { 
+//     element.find('.fc-event-title').append("<br/>" + event.company); 
+// }
+
+    // eventRender: function (event, element) {
+    //     element.attr('href', 'javascript:void(0);');
+    //     element.click(function() {
+    //         $("#startTime").html(moment(event.start).format('MMM Do h:mm A'));
+    //         $("#endTime").html(moment(event.end).format('MMM Do h:mm A'));
+    //         $("#eventInfo").html(event.description);
+    //         $("#eventLink").attr('href', event.url);
+    //         $("#eventContent").dialog({ modal: true, title: event.title, width:350});
+    //     });
+    // }
+});
+
+
+
+     console.log("event",eventsource);
 }
 
 
@@ -358,4 +459,20 @@ function resetpass(){
 function resetpass2(){
 	window.location="resetpass.html";
 
+}
+function visitordetails(arr){
+   var i=1;
+    var str="<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
+   
+    $.each(arr, function(index, value) {
+
+                str+= "<tr><td>" + i + "</td><td>"+ value.name + "</td><td>" + value.email + "</td><td>"+ value.mobile + "</td><td>" + value.idtype + "</td><td>" + value.identity + "</td><td>" + value.vehicleid + "</td></tr>";
+            i++; 
+
+        
+       
+    });
+    str += "</tbody> </table> </div>";
+return str;
+console.log("event",eventsource);
 }
