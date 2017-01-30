@@ -26,7 +26,7 @@ var js={"status":"","message":"","data":{},"data2":{}};
 					res.send(js);
 					return false;
 			}
-			conn.query('select name,password,type,uid from user_login where name="'+name+'"',function(err,rows){
+			conn.query('select uname,password,type,uid from user_login where uname="'+name+'"',function(err,rows){
 			var data=JSON.stringify(rows);
 			console.log(data);
 			var json=JSON.parse(data);
@@ -34,7 +34,7 @@ var js={"status":"","message":"","data":{},"data2":{}};
 			var js={"status":"","message":"","type":""};
 			if(json.length )
 			{
-			if(name==json[0].name && pass==json[0].password)
+			if(name==json[0].uname && pass==json[0].password)
 			{
 
 				var token = jwt.sign({ uid: json[0].uid,type:json[0].type}, 'tibin',{expiresIn:60*10000});
@@ -43,7 +43,7 @@ var js={"status":"","message":"","data":{},"data2":{}};
 				js.uid =json[0].uid;
 				js.token=token;
 				js.type=json[0].type;
-				js.username=json[0].name;
+				js.username=json[0].uname;
 				console.log(js.username);
 				js.message="success";
 				res.send(js);

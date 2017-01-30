@@ -41,9 +41,9 @@ router.route('/')
         //console.log(req);
 
         var user = {
-            name: name,
-            email: email,
-            mobile: mobile,
+            uname: name,
+            uemail: email,
+            umobile: mobile,
             password: password,
             cid: cid
         };
@@ -217,9 +217,9 @@ router.route('/:userid/:name/:email/:mobile')
             return false;
         }
         var user = {
-            name: name,
-            email: email,
-            mobile: mobile
+            uname: name,
+            uemail: email,
+            umobile: mobile
         };
         console.log("put", name);
         var query = conn.query('UPDATE user_login SET ? where uid = ?', [user, userid], function(err, rows) {

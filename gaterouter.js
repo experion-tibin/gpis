@@ -198,7 +198,7 @@ router.route('/')
     })
     .get(function(req, res) {
         console.log("pppppppp");
-        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd  where g.gateid=gd.gdid and g.visitorid=v.vid ORDER BY date ASC; select * from user_login u,company c where u.cid=c.cid ', function(err, rows) {
+        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd,user_login u,company c  where g.gateid=gd.gdid and g.visitorid=v.vid  and u.uid=gd.uid and u.cid=c.cid ORDER BY date ASC; select * from user_login u,company c where u.cid=c.cid ', function(err, rows) {
             console.log("rows");
             var data = JSON.stringify(rows[0]);
             console.log(rows);
@@ -235,7 +235,7 @@ router.route('/:userid')
             return false;
         }
         console.log(id);
-        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd where g.gateid=gd.gdid and g.visitorid=v.vid and gd.uid = ? ORDER BY date ASC', [id], function(err, rows) {
+        var query = conn.query('select * from gatepass g,visitor v,gatepass_details gd,user_login u,company c where g.gateid=gd.gdid and g.visitorid=v.vid and u.uid=gd.uid and u.cid=c.cid and gd.uid = ? ORDER BY date ASC', [id], function(err, rows) {
             // var data=JSON.stringify(rows[0]);
             //    json=JSON.parse(data);
             if (!err) {

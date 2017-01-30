@@ -283,7 +283,7 @@ function addtable(arr) {
     var length = arr.length;
 
 
-    content = "<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>No.</th><th>GatepassID</th><th>Date</th><th>Time</th><th>Purpose</th><th>Visitors</th></tr></thead><tbody>";
+    content = "<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>No.</th><th>GatepassID</th><th>Company</th><th>Date</th><th>Time</th><th>Purpose</th><th>Visitors</th></tr></thead><tbody>";
     var i = 1;
     $.each(arr, function(index, value) {
 
@@ -301,7 +301,7 @@ function addtable(arr) {
 
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";
-                content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+                content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
 
             } else {
                 content += "<tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
@@ -331,7 +331,7 @@ function addtable1(arr) {
         var x = "'" + element.gdid + "'";
         //var gid=element.gid;
 
-        content += "<tr id=\"" + element.uid + "\"><td>" + i + "</td><td contenteditable=\"false\">" + element.name + "</td><td contenteditable=\"false\">" + element.email + "</td><td contenteditable=\"false\">" + element.mobile + "</td><td>" + element.cname + "</td><td>" + element.building + "</td><td><a class=\"editr\" ><span  class=\"glyphicon glyphicon-pencil\"></span></a>" + "</td><td><a class=\"deleter\" data-toggle=\"tooltip\" title=\"Delete User\"><span style=\"color:red;\" class=\"glyphicon glyphicon-remove\"></span></a>" + "</td></tr>";
+        content += "<tr id=\"" + element.uid + "\"><td>" + i + "</td><td contenteditable=\"false\">" + element.uname + "</td><td contenteditable=\"false\">" + element.uemail + "</td><td contenteditable=\"false\">" + element.umobile + "</td><td>" + element.cname + "</td><td>" + element.building + "</td><td><a class=\"editr\" ><span  class=\"glyphicon glyphicon-pencil\"></span></a>" + "</td><td><a class=\"deleter\" data-toggle=\"tooltip\" title=\"Delete User\"><span style=\"color:red;\" class=\"glyphicon glyphicon-remove\"></span></a>" + "</td></tr>";
         i++;
     });
     content += "</tbody> </table> </div>";
