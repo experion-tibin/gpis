@@ -48,3 +48,27 @@ httpObj.open('POST','http://192.168.1.234:8088/login',true);
 httpObj.setRequestHeader('content-type','application/x-www-form-urlencoded');
 httpObj.send('name='+document.getElementById('inputName').value+'&password='+password);
 }
+$(function() {
+    if (localStorage.chkbx && localStorage.chkbx != '') {
+        $('#remember_me').attr('checked', 'checked');
+        $('#inputName').val(localStorage.usrname);
+        $('#inputPassword').val(localStorage.pass);
+    } else {
+        $('#remember_me').removeAttr('checked');
+        $('#inputName').val('');
+        $('#inputPassword').val('');
+    }
+    $('#remember_me').click(function() {
+         if ($('#remember_me').is(':checked')) {
+            localStorage.usrname = $('#inputName').val();
+            localStorage.pass = $('#inputPassword').val();
+            localStorage.chkbx = $('#remember_me').val();
+        } else {
+            localStorage.usrname = '';
+            localStorage.pass = '';
+            localStorage.chkbx = '';
+        }
+    });
+});
+
+ localStorage.removeItem('token1');

@@ -3,6 +3,7 @@ function logout() {
     //console.log(token);
     //console.log(usertype);
 
+
     bootbox.confirm("Proceed with logout? ",function(result)
     	{ 
     		if(result == true)
@@ -11,7 +12,7 @@ function logout() {
     		localStorage.removeItem('token');
 		    localStorage.removeItem('userid');
 		    localStorage.removeItem('usertype');
-		    localStorage.clear();
+		    //localStorage.clear();
 		    window.location = "l.html";
 		    }
 		    

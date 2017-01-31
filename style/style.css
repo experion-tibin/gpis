@@ -11,12 +11,20 @@ font-family: 'Raleway', sans-serif;
 
 
 .demo-layout-transparent{
-	background-color: #61f2f5;
+	background-image: url("gate2.jpg");                    
 
 }
 body{
 
-	background-color: #F3F3F3;
+	
+
+
+
+
+
+
+
+  background-image: url("gate2.jpg");                    
 
 	
 	width: 100%;
@@ -63,4 +71,34 @@ td[contenteditable=true]{
 .mdl-textfield__input{
 	color: black;
 
+}
+#calendar{
+	height: calc(100% - 50px);
+	height: 500px;
+	/*height: 1500px;*/
+	height:calc(100vh - 200px);
+    height:-moz-calc(100vh - 200px);
+    height:-webkit-calc(100vh - 200px);
+    height: 79vh;
+    
+}
+#calendarview{
+	padding: 2%;
+	border-color: #ddd;
+  /* background: linear-gradient(#767777,#F3F3F3); */
+  background-color: #Fff;
+  opacity: 0.9;
+
+}
+.overridefull {
+	table-layout: inherit !important; 
+	width: 100% !important;
+}
+a {
+  color: #BDC6CF;
+  text-decoration: none;
+}
+
+body.modal-open div.modal-backdrop { 
+    z-index: 0; 
 }

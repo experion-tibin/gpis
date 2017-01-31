@@ -200,11 +200,14 @@ function toggle_visibility(id) {
     var view = document.getElementById('viewall');
     var viewusers = document.getElementById('viewusers');
     var adduser = document.getElementById('adduser');
+    var calendar=document.getElementById('calendar');
     if (e == view) {
         console.log("view");
         view.style.display = 'block';
         adduser.style.display = 'none';
         viewusers.style.display = 'none';
+        calendar.style.display='none';
+
         viewAll();
          
     } else if (e == viewusers) {
@@ -212,13 +215,24 @@ function toggle_visibility(id) {
         view.style.display = 'none';
         adduser.style.display = 'none';
         viewusers.style.display = 'block';
+        calendar.style.display='none';
         viewAll();
        
-    } else {
+    } else if(e == adduser){
         console.log("adduser");
         view.style.display = 'none';
         adduser.style.display = 'block';
         viewusers.style.display = 'none';
+        calendar.style.display='none';
+    }
+    else {
+        console.log("adduser");
+        view.style.display = 'none';
+        adduser.style.display = 'none';
+        viewusers.style.display = 'none';
+        calendar.style.display='block';
+         $('#calendarview').fullCalendar('render');
+
     }
 }
 /*--------------------------------------show users and gatepass-------------------------------------*/
@@ -359,17 +373,26 @@ function addtable(arr) {
                 {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay,listDay'
-                }, 
+                    right: 'month,listWeek,basicDay'
+                },
+                 height: "parent" 
+                ,
         defaultView: 'listDay',
+
+        dayClick: function(date, jsEvent, view) {
+
+            $('#calendarview').fullCalendar('gotoDate',date);
+            $('#calendarview').fullCalendar('changeView','listDay');
+
+   },
 
    
      eventClick:  function(event, jsEvent, view) {
 
             $('#modalTitle').html(
-                "Purpose:"+
+                "<div class='well'>Purpose:"+
                 event.purpose
-                +"  <br>   GatepassID:"+event.id+"  <br> Date:"+moment(event.start).format('MMM Do h:mm A')+"  <br> Company:"+event.company+""
+                +"  <br>   GatepassID:"+event.id+"  <br> Date:"+moment(event.start).format('MMM Do h:mm A')+"  <br> Company:"+event.company+"</div>"
                 );
              //$('#modalTitle').html(event.title);
             $('#modalBody').html(visitordetails(event.visitor));
@@ -550,7 +573,7 @@ function toTime(str) {
 }
 function visitordetails(arr){
    var i=1;
-    var str="<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
+    var str="<label for='table1'>Visitor Details</label><div class='table-responsive'><table class='table table-hover table-inverse overridefull' id='table1'><thead class='thead-inverse'><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
    
     $.each(arr, function(index, value) {
 

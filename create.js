@@ -399,7 +399,9 @@ $('#calendarview').fullCalendar({
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay,listDay'
-                }, 
+                },
+                height:"parent" 
+                ,
         defaultView: 'listDay',
 
    
@@ -413,8 +415,16 @@ $('#calendarview').fullCalendar({
              //$('#modalTitle').html(event.title);
             $('#modalBody').html(visitordetails(event.visitor));
             //#myModal4.modal-dialog  {width:75%;};
-            $('#fullCalModal').modal();
-        }
+          //  var bootstrapButton = $.fn.button.noConflict() ;// return $.fn.button to previously assigned value
+//$.fn.bootstrapBtn = bootstrapButton  ;          // give $().bootstrapBtn the bootstrap functionality
+            $('#fullCalModal').modal({backdrop:"static"});
+        },
+        dayClick: function(date, jsEvent, view) {
+
+            $('#calendarview').fullCalendar('gotoDate',date);
+            $('#calendarview').fullCalendar('changeView','agendaDay');
+
+   }
 //         eventRender: function(event, element)
 // { 
 //     element.find('.fc-event-title').append("<br/>" + event.company); 
@@ -462,7 +472,7 @@ function resetpass2(){
 }
 function visitordetails(arr){
    var i=1;
-    var str="<div class='table-responsive'><table class='table table-hover' id='table1'><thead><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
+    var str="<div class=' table table-responsive '><table class='table  table-striped overridefull ' style='overflow:auto; '  id='table1'><thead class='thead-default'><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
    
     $.each(arr, function(index, value) {
 
