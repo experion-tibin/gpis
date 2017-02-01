@@ -463,8 +463,8 @@ $(function() {
     $("#display2").on("click", resetpass2);
 });
 function resetpass(){
-	document.getElementById('display2').style.display = 'block';
-
+	//document.getElementById('display2').style.display = 'block';
+    $( "#display2" ).toggle();
 }
 function resetpass2(){
 	window.location="resetpass.html";

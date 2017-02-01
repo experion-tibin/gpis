@@ -6,6 +6,7 @@ var mysql = require('mysql');
 var cors = require('cors');
 var jwt = require('jsonwebtoken');
 var validator = require('validator');
+var nodemailer = require('nodemailer');
 var conn=mysql.createConnection({host:"localhost",user:"root",password:"tibin",database:"gatepass",multipleStatements: true});
  //conn = mysql.createConnection({});
 var json;
@@ -65,7 +66,80 @@ var js={"status":"","message":"","data":{},"data2":{}};
 
 	});
 
+	router.route('/password')
+    .get(function(req, res) {
+    	js.data="";
+    	//console.log(req);
+    	var email = req.query.email;
+        //var email=req.body.email;
+       
+        var query = conn.query('select * from user_login where uemail = ?', email,function(err, rows) {
+            
+            if (!err) {
+            	console.log(rows[0]);
+            	var data = JSON.stringify(rows);
+            json = JSON.parse(data);
+            //console.log(json);
+            if(json[0]){
+            	console.log(json[0]);
+            
 
+            var token = jwt.sign({ uid: json[0].uid,type:json[0].type}, 'tibin',{expiresIn:60*10000});
+
+            //var emailtext = "Your username is : " + name + " and password is :" + password;
+                // create reusable transporter object using the default SMTP transport
+                var transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: 'bugtrackerndm@gmail.com', // Your email id
+                        pass: 'bugtracker' // Your password
+                    }
+                });
+
+                // setup e-mail data with unicode symbols
+                var mailOptions = {
+                    from: '"admin@gpis.com " <admin@gpis.com>', // sender address
+                    to: "tibin.thomas@experionglobal.com", // list of receivers
+                    subject: 'password ✔', // Subject line
+                    text: "emailtext", // plaintext body
+                    html: '<li><a href="http://192.168.1.234:8088/login/password/token='+token+'">hai</a></li>' // html body
+                };
+
+                // send mail with defined transport object
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log('Message sent: ' + info.response);
+                });
+
+
+
+                js.status = '200';
+                js.message = 'fetched';
+                js.data = json;
+
+                console.log("fetched2");
+                res.send(js);
+            }
+            } 
+
+
+
+
+
+            else {
+                js.status = '403';
+                js.message = 'failed';
+
+
+                console.log("failed2");
+                res.send(js);
+            }
+
+            //console.log(json[0].assetid); 
+        });
+    });
 	
 	
    

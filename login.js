@@ -1,8 +1,8 @@
 //$.material.init();
 
 
-
-function abcd(){
+var httpObj=new	XMLHttpRequest();
+function loginuser(){
     var	 password=document.getElementById('inputPassword').value;
     password=(Crypto.MD5(password)).toString();
 var httpObj=new	XMLHttpRequest();
@@ -72,3 +72,22 @@ $(function() {
 });
 
  localStorage.removeItem('token1');
+function modalopen(){
+	$('#fullCalModal').modal();
+}
+function forgotpass(){
+	var email=document.getElementById('resetemail').value;
+	
+
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!(email.match(mailformat))) {
+        bootbox.alert("invalid email");
+        return false;
+    }
+
+
+    httpObj.open('GET','http://192.168.1.234:8088/login/password'+'?email='+email,true);
+	httpObj.setRequestHeader('content-type','application/x-www-form-urlencoded');
+	httpObj.send();
+	console.log("pass");
+}
