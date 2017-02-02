@@ -1,4 +1,3 @@
-
 var express = require('express')
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -99,10 +98,13 @@ var js={"status":"","message":"","data":{},"data2":{}};
                 // setup e-mail data with unicode symbols
                 var mailOptions = {
                     from: '"admin@gpis.com " <admin@gpis.com>', // sender address
-                    to: "tibin.thomas@experionglobal.com", // list of receivers
+                    to: email, // list of receivers
                     subject: 'password ✔', // Subject line
                     text: "emailtext", // plaintext body
-                    html: '<li><a href="http://192.168.1.234:8088/login/password/token='+token+'">hai</a></li>' // html body
+                   // html: '<li><a href="http://192.168.1.234:8088/login/password/token='+token+'">hai</a></li>' // html body
+               		html: 'Hai,<br><br>Please reset your password,using the following link<li><a href="http://192.168.1.234/gatepass/forgotpass.html?token='+token+'">Reset Password</a></li><br>Regards,<br>Experion' // html body
+            
+
                 };
 
                 // send mail with defined transport object
@@ -139,9 +141,67 @@ var js={"status":"","message":"","data":{},"data2":{}};
 
             //console.log(json[0].assetid); 
         });
+    })
+	.put(function(req, res) {
+
+
+
+
+			var querydb = function(querystr, querydata) {
+			            return new Promise(function(resolve, reject) {
+
+			                var query = conn.query(querystr, querydata, function(err, result) {
+			                        // Neat! 
+			                        if (result) {
+
+			                            resolve(result);
+
+
+			                        } else {
+
+			                            reject(err);
+			                        }
+			                    }
+
+			                );
+			                console.log(query.sql);
+
+			            });
+
+			        }
+
+        //var userid = req.params.userid;
+        var data = req.body;
+        var token=data.token;
+        var newpass=data.newpass; 
+
+        var decoded = jwt.verify(token, 'tibin');
+  var userid=decoded.uid;
+	
+        // if (userid.length < 1) {
+        //     js.status = '403';
+        //     js.message = 'error id';
+        //     res.send(js);
+        //     return false;
+        // }
+        console.log("reset", userid);
+        
+          var user = {
+            password: newpass
+            
+          };
+          querydb('UPDATE user_login SET ? where uid = ?',[user,userid])
+          .then(function(result){
+          	if(result){
+          		console.log("success");
+          	
+          	js.status = '200';
+            js.message = 'updated password';
+            res.send(js);
+            }
+          });
+       
     });
-	
-	
    
 	router.route('/verifyuser')
 		.post(function(req, res){

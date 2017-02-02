@@ -54,7 +54,8 @@
                             <div class="col-sm-4">
                                 <label for="name" style="float:left;">Name</label>
                                 <br>
-                                <input type="text" required class="form-control" id="inputName" name="name" placeholder="Name">
+                                <input type="text" required class="form-control" id="inputName" name="name" placeholder="Name" onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('inputPassword').focus()">
                             </div>
                             <div class="col-sm-4"></div>
                             <div class="col-sm-12"></div>
@@ -62,11 +63,12 @@
                             <div class="col-sm-4">
                                 <label for="password" style="float:left;">Password</label>
                                 <br>
-                                <input type="password" required class="form-control" id="inputPassword" placeholder="Password" name="password">
+                                <input type="password" required class="form-control" id="inputPassword" placeholder="Password" name="password" onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('login_button').click()">
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
-                        <button class="btn" type="button" onclick="loginuser();"> Login</button>
+                        <button class="btn" type="button" id="login_button" onclick="loginuser();"> Login</button>
                         <label class="checkbox">
                     <input type="checkbox" value="remember-me" id="remember_me"> Remember me
                     </label>

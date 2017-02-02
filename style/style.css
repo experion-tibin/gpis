@@ -102,3 +102,19 @@ a {
 body.modal-open div.modal-backdrop { 
     z-index: 0; 
 }
+
+td > button {
+        display: block;
+        width: 100%;
+      
+    }
+        
+    	
+    .visitortd{
+    	width: 45%;
+    }
+
+    .more-less {
+        float: right;
+        color: #212121;
+    }

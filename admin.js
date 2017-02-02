@@ -58,6 +58,7 @@ function save() {
     jsobject.email = document.getElementById('email').value;
     jsobject.mobile = document.getElementById('mobile').value;
     jsobject.password = document.getElementById('password').value;
+    jsobject.password2 = document.getElementById('password').value;
     jsobject.password=(Crypto.MD5(jsobject.password)).toString();
     jsobject.company = document.getElementById('company').value;
     jsobject.building = document.getElementById('building').value;
@@ -82,11 +83,13 @@ function save() {
 
                 console.log("result.message");
                 document.getElementById("result").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
 
                 //window.location="user.html";
             } else {
                 console.log("result.message");
                 document.getElementById("result").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
             }
         }
     }
@@ -286,7 +289,7 @@ function viewAll() {
     httpObj1.setRequestHeader('content-type', 'application/json');
     httpObj1.setRequestHeader("Authorization", JSON.stringify(auth));
     httpObj1.send();
-    document.getElementById("display").innerHTML = username;
+    document.getElementById("display").innerHTML = "Welcome "+username;
     console.log(userid);
 }
 /*-------------------------------------generate gatepass table-----------------------------------*/
@@ -314,6 +317,8 @@ function addtable(arr) {
     };
 
 
+
+
         $.each(value, function(index1, element) {
             // var mydate = new Date(element.date);
             // mydate = mydate.toISOString().split('T')[0];
@@ -328,9 +333,11 @@ function addtable(arr) {
 
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";
-                content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+               // content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
 
             
+             content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td class=\"visitortd\">  <button role=\"button\" class=\" btn \" data-toggle=\"collapse\" data-target=\"#toggleDemo"+i+"\" value=\"View Visitors\"> View Visitors <i class=\"more-less glyphicon glyphicon-plus\"></i> </button><div id=\"toggleDemo"+i+"\" class=\"collapse \"><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Id Type</th><th>Id Number</th><th>Vehicle Number</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+ 
 
                 eventobj.title=element.purpose+" at "+element.cname;
                 eventobj.id=element.gdid;
@@ -353,7 +360,7 @@ function addtable(arr) {
         });
          eventsource.push(eventobj);
         i++;
-        content += "</tbody> </table></td></tr>";
+        content += "</tbody> </table></div></td></tr>";
     });
     content += "</tbody> </table> </div>";
     document.getElementById('view').innerHTML = content;
@@ -444,10 +451,27 @@ function addtable1(arr) {
 }
 /*----------------------------------------delete a row--------------------------------------------*/
 function deleterow() {
-
-
-    var currentTR = $(this).parent().parent();
-    var pr = $(this).parent() // Moves up from <button> to <td>
+var thisr=$(this);
+    bootbox.confirm({
+        title:"Delete",
+        message:"Do You Really Want To Delete This User?", 
+        backdrop:true,
+        buttons : {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-danger'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-success'
+        }
+    },
+      callback:  function(result){ 
+            console.log('This was logged in the callback: ' + result); 
+    if(result == true)
+    {
+         var currentTR = thisr.parent().parent();
+    var pr = thisr.parent() // Moves up from <button> to <td>
         .parent();
     var uid = currentTR.attr('id');
 
@@ -465,12 +489,12 @@ function deleterow() {
 
             {
 
-                // 		console.log("result.message");
+                //      console.log("result.message");
                 document.getElementById("result3").innerHTML = result.message;
 
-                // 		//window.location="user.html";
+                //      //window.location="user.html";
             } else {
-                // 		console.log(result.message);
+                //      console.log(result.message);
                 document.getElementById("result3").innerHTML = result.message;
             }
         }
@@ -482,6 +506,21 @@ function deleterow() {
     httpObj1.send();
 
     currentTR.remove();
+    }
+    else{
+        return;
+    }
+
+
+
+    }
+    });
+   
+
+}
+function deleterow2(){
+
+
 
 }
 /*----------------------------------------edit a user--------------------------------------------*/
@@ -538,11 +577,13 @@ function dbsaverow(arr, uid) {
 
                 //		console.log("result.message");
                 document.getElementById("result3").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
 
                 // 		//window.location="user.html";
             } else {
                 //		console.log(result.message);
                 document.getElementById("result3").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
             }
         }
     }
@@ -587,3 +628,43 @@ function visitordetails(arr){
 return str;
 console.log("event",eventsource);
 }
+
+$(function(){
+var email = document.getElementById("email");
+var emailerror = document.querySelector('.emailerror');
+var perror = document.querySelector('.perror');
+var password=document.getElementById("password");
+//email.addEventListener("keyup", function (event) {});
+
+
+password.addEventListener("keyup", function (event) {
+ 
+
+  if (!password.value.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/)) {
+   
+    perror.innerHTML = "minimum1(uppercase,lowercase,number,special character),length:>7";
+    
+  } else {
+    email.setCustomValidity("");
+     perror.innerHTML = "";
+    
+
+  }
+});
+
+
+$("#export").click(function(){
+  $("#table1").table2excel({
+    // exclude CSS class
+    exclude: ".noExl",
+    name: "Worksheet Name",
+    filename: "SomeFile" //do not include extension
+  }); 
+  $("#table2").table2excel({
+    // exclude CSS class
+    exclude: ".noExl",
+    name: "Worksheet Name",
+    filename: "SomeFile" //do not include extension
+  }); 
+});
+});

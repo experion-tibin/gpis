@@ -5,6 +5,7 @@ var httpObj=new	XMLHttpRequest();
 function loginuser(){
     var	 password=document.getElementById('inputPassword').value;
     password=(Crypto.MD5(password)).toString();
+    console.log(password);
 var httpObj=new	XMLHttpRequest();
 httpObj.onreadystatechange=function()
 {	
@@ -91,3 +92,4 @@ function forgotpass(){
 	httpObj.send();
 	console.log("pass");
 }
+

@@ -111,7 +111,9 @@ function validate() {
         document.userform.name.focus();
         return false;
     }
-    if (document.userform.password.value.length < 4) {
+    if (document.userform.password.value.length < 4 || !(document.userform.password.value.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/))) {
+
+        //var pasmatch= password.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/);
         bootbox.alert("Please provide a valid password!");
         document.userform.password.focus();
         return false;

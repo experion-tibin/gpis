@@ -34,6 +34,7 @@ router.route('/')
         var email = data.email;
         var mobile = data.mobile;
         var password = data.password;
+        var password2 = data.password2;
         var company = data.company;
         var building = data.building;
         var cid = data.cid;
@@ -59,7 +60,7 @@ router.route('/')
                 js.message = "success";
                 res.send(js);
                 console.log(result);
-                var emailtext = "Your username is : " + name + " and password is :" + password;
+                var emailtext = "Hai "+name+"<br><br>Your username is : " + name + " and password is :" + password2+"<br>Regards,<br>Experion";
                 // create reusable transporter object using the default SMTP transport
                 var transporter = nodemailer.createTransport({
                     service: 'Gmail',
@@ -74,7 +75,7 @@ router.route('/')
                     from: '"admin@gpis.com " <admin@gpis.com>', // sender address
                     to: email, // list of receivers
                     subject: 'password ✔', // Subject line
-                    text: emailtext, // plaintext body
+                    html: emailtext, // plaintext body
                     //html: '<b>Hello world ?</b>' // html body
                 };
 
@@ -166,7 +167,9 @@ router.route('/:userid')
         var userid = req.params.userid;
         var data = req.body;
         var oldpass=data.oldpass;
-        var newpass=data.newpass; 
+        console.log(oldpass);
+        var newpass=data.newpass;
+        console.log(newpass); 
         if (userid.length < 1) {
             js.status = '403';
             js.message = 'error id';

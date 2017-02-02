@@ -105,11 +105,13 @@ function save() {
                 console.log("created gdid");
                 console.log("gatepass",result.message);
                 document.getElementById("result").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
 
                 //window.location="user.html";
             } else {
                 //		console.log(result.message);
                 document.getElementById("result").innerHTML = result.message;
+                bootbox.alert({backdrop:true,message:result.message});
             }
         }
     }
@@ -150,6 +152,10 @@ function add() {
     format: 'dd-mm-yyyy',
     startDate: '-0d'
 });
+     var time = new Date();
+
+    $("#time").val(time.getHours() + ':' + time.getMinutes());
+    $("#time").attr({"min" : time.getHours() + ':' + time.getMinutes()});
 
      document.getElementById('date').value=dateformat;
     var table = document.getElementById("vtable");
@@ -296,7 +302,7 @@ function view() {
     httpObj1.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     httpObj1.send();
 
-    document.getElementById("display").innerHTML = username;
+    document.getElementById("display").innerHTML = "Welcome  "+username;
 }
 
 function addtable(arr) {
@@ -350,7 +356,11 @@ function addtable(arr) {
             console.log(datetime);
             if (index1 == 0) {
                 // innerHTML += "<h3>"+value1.gid+"</h3>";
-                content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+                content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.date + "</td><td>" + element.time + "</td><td>" + element.purpose  + "</td><td class=\"visitortd\">  <button role=\"button\" class=\" btn \" data-toggle=\"collapse\" data-target=\"#toggleDemo"+i+"\" value=\"View Visitors\"> View Visitors <i class=\"more-less glyphicon glyphicon-plus\"></i> </button><div id=\"toggleDemo"+i+"\" class=\"collapse \"><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Id Type</th><th>Id Number</th><th>Vehicle Id</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";//"</td><td><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Idtype</th><th>Idno</th><th>VehicleId</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+                //  content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td class=\"visitortd\">  <button role=\"button\" class=\" btn \" data-toggle=\"collapse\" data-target=\"#toggleDemo"+i+"\" value=\"View Visitors\"> View Visitors <i class=\"more-less glyphicon glyphicon-plus\"></i> </button><div id=\"toggleDemo"+i+"\" class=\"collapse \"><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Id Type</th><th>Id Number</th><th>Vehicle Number</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+  //content += "<tr><td>" + i + "</td><td>" + element.gdid + "</td><td>" + element.cname + "</td><td>"+ element.date + "</td><td>" + element.time + "</td><td>" + element.purpose + "</td><td class=\"visitortd\">  <button role=\"button\" class=\" btn \" data-toggle=\"collapse\" data-target=\"#toggleDemo"+i+"\" value=\"View Visitors\"> View Visitors <i class=\"more-less glyphicon glyphicon-plus\"></i> </button><div id=\"toggleDemo"+i+"\" class=\"collapse \"><table class=\"table table-responsive\"><thead><tr><th>Name</th><th>Email</th><th>Id Type</th><th>Id Number</th><th>Vehicle Number</th></tr></thead><tbody><tr><td>" + element.name + "</td><td>" + element.email + "</td><td>" + element.idtype + "</td><td>" + element.identity + "</td><td>" + element.vehicleid + "</td></tr>";
+ 
+
 
                 eventobj.title=element.purpose+" at "+element.cname;
                 eventobj.id=element.gdid;
@@ -376,7 +386,8 @@ function addtable(arr) {
         eventsource.push(eventobj);
                 console.log(eventsource);
         i++;
-        content += "</tbody> </table></td></tr>";
+        //content += "</tbody> </table></td></tr>";
+            content += "</tbody> </table></div></td></tr>";
         
     });
     content += "</tbody> </table> </div>";
@@ -472,7 +483,7 @@ function resetpass2(){
 }
 function visitordetails(arr){
    var i=1;
-    var str="<div class=' table table-responsive '><table class='table  table-striped overridefull ' style='overflow:auto; '  id='table1'><thead class='thead-default'><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Idno</th><th>VehicleID</th></tr></thead><tbody>";
+    var str="<div class=' table table-responsive '><table class='table  table-striped overridefull ' style='overflow:auto; '  id='table1'><thead class='thead-default'><tr><th>#.</th><th>Name</th><th>Email</th><th>Mobile</th><th>Idtype</th><th>Id Number</th><th>VehicleID</th></tr></thead><tbody>";
    
     $.each(arr, function(index, value) {
 
